@@ -1,0 +1,18 @@
+#!/bin/bash
+set -u
+
+# Given an arg, does a series of resolutions to pick which invocation of the command _makes sense_
+# -- largely used when build scripts come in a _wrapped_ flavour (EG. gradle, gradlew, gradleww, ...). This can do the check to determine if a call will work
+
+
+if [ -z "$1" ] ; then
+	echo ""
+	return 1
+elif command -v "$1" &>/dev/null ; then
+	echo "$1"
+elif [[ -x "./$1" ]] ; then
+	echo "./$1"
+else
+	echo ""
+	return 2
+fi	
