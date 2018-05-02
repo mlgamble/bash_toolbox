@@ -1,0 +1,2 @@
+alias gw='wrapcall gradle'
+alias yw='wrapcall yarn'
