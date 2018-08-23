@@ -1,8 +1,5 @@
 #!/bin/bash
 
-pushd "$(dirname $0)"
-trap 'popd' EXIT
-
 if [ -z "$1" ]; then
 	echo "USAGE: wrapcall <basescript> [-s|--suffix <suffix> : default 'w'] [args]"
 	return 1
@@ -17,12 +14,12 @@ if [ "$1" = "-s" ] || [ "$1" = "--suffix" ]; then
 	shift
 fi
 
-while ./cancall.sh "${SCRIPT}${SUFFIX}" ; do
+while cancall "${SCRIPT}${SUFFIX}" ; do
 	SCRIPT="${SCRIPT}${SUFFIX}"
 done
 
-if ./cancall.sh $SCRIPT ; then
-	CALL="$(${SCRIPTS}/getcall.sh $SCRIPT)"
+if cancall $SCRIPT ; then
+	CALL="$(getcall $SCRIPT)"
 	echo "Running '$CALL${@+ }$@'" >&2
 	$CALL $@
 else
