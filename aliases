@@ -1,2 +1,5 @@
 alias gw='wrapcall gradle'
 alias yw='wrapcall yarn'
+
+#Total usage
+alias tu='ls -A | xargs du -s | sort -nrk1,1' | numfmt
