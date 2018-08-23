@@ -3,9 +3,11 @@
 TOOLBOX="$(dirname ${BASH_SOURCE[0]})"
 echo "$PATH" | grep -q "$TOOLBOX" || export PATH="${PATH}:${TOOLBOX}"
 
+function total_usage {
+	ls -A | xargs du -s | sort -nrk1,1 | awk '{ N=$1; $1=""; system("echo `numfmt "N"` "$0) }'
+}
+
 
 alias gw='wrapcall gradle'
 alias yw='wrapcall yarn'
-
-#Total usage
-alias tu='ls -A | xargs du -s | sort -nrk1,1 | numfmt'
+alias tu='total_usage'
