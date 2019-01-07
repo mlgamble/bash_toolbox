@@ -1,6 +1,7 @@
 #!/bin/bash
 
-TOOLBOX="$(dirname $0)"
+TOOLBOX="$(dirname "${BASH_SOURCE[0]}")"
+echo "Adding '$TOOLBOX' to the PATH"
 echo "$PATH" | grep -q "$TOOLBOX" || export PATH="${PATH}:${TOOLBOX}"
 
 function total_usage {
