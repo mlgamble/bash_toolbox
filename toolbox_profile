@@ -1,11 +1,10 @@
 #!/bin/bash
 
-TOOLBOX="$(dirname "${BASH_SOURCE[0]}")"
 echo "Adding '$TOOLBOX' to the PATH"
 echo "$PATH" | grep -q "$TOOLBOX" || export PATH="${PATH}:${TOOLBOX}"
 
 function total_usage {
-	ls -A | xargs du -s | sort -nrk1,1 | awk '{ N=$1; $1=""; system("echo `numfmt "N"` "$0) }'
+    ls -A | xargs du -s | sort -nrk1,1 | awk '{ N=$1; $1=""; system("echo `numfmt "N"` "$0) }'
 }
 
 
@@ -14,4 +13,4 @@ alias yw='wrapcall yarn'
 alias tu='total_usage'
 alias jp='jsonprettyprint'
 
-. ${TOOLBOX}/toolbox_aliases
+source ${TOOLBOX}/toolbox_aliases
