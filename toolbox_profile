@@ -4,7 +4,12 @@ echo "Adding '$TOOLBOX' to the PATH"
 echo "$PATH" | grep -q "$TOOLBOX" || export PATH="${PATH}:${TOOLBOX}"
 
 function total_usage {
-    ls -A | xargs du -s | sort -nrk1,1 | awk '{ N=$1; $1=""; system("echo `numfmt "N"` "$0) }'
+    ls -A | xargs du -s | sort -nrk1,1 | awk '{ N=$1; $1=""; system("echo `numfmt "N"` "$0) }' | \
+    if [[ $# -eq 1 ]] ; then 
+	head -n$1
+    else
+        cat
+    fi
 }
 
 
