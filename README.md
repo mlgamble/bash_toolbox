@@ -15,47 +15,60 @@
 
 # Custom oh-my-zsh (b7b40b0b68c791d57d91c7f4e17ed681d01d5c75) changes:
 
+Because I don't think it's worth it maintain a custom fork/branch
+
 ```diff
 diff --git a/plugins/git-prompt/git-prompt.plugin.zsh b/plugins/git-prompt/git-prompt.plugin.zsh
-index 2776f29..6a97656 100644
+index 2776f29..5fcd668 100644
 --- a/plugins/git-prompt/git-prompt.plugin.zsh
 +++ b/plugins/git-prompt/git-prompt.plugin.zsh
-@@ -47,46 +47,44 @@ function update_current_git_vars() {
+@@ -42,51 +42,53 @@ function update_current_git_vars() {
+     GIT_CONFLICTS=$__CURRENT_GIT_STATUS[5]
+     GIT_CHANGED=$__CURRENT_GIT_STATUS[6]
+     GIT_UNTRACKED=$__CURRENT_GIT_STATUS[7]
++    GIT_STASHED=$__CURRENT_GIT_STATUS[8]
+ }
+ 
  git_super_status() {
      precmd_update_git_vars
      if [ -n "$__CURRENT_GIT_STATUS" ]; then
 -      STATUS="$ZSH_THEME_GIT_PROMPT_PREFIX$ZSH_THEME_GIT_PROMPT_BRANCH$GIT_BRANCH%{${reset_color}%}"
-+      STATUS="$ZSH_THEME_GIT_PROMPT_PREFIX$ZSH_THEME_GIT_PROMPT_BRANCH$GIT_BRANCH" #%{${reset_color}%}"
++      STATUS="$ZSH_THEME_GIT_PROMPT_PREFIX$ZSH_THEME_GIT_PROMPT_BRANCH$GIT_BRANCH"
        if [ "$GIT_BEHIND" -ne "0" ]; then
 -          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$GIT_BEHIND%{${reset_color}%}"
-+          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$GIT_BEHIND" #%{${reset_color}%}"
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_BEHIND$GIT_BEHIND"
        fi
        if [ "$GIT_AHEAD" -ne "0" ]; then
 -          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD$GIT_AHEAD%{${reset_color}%}"
-+          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD$GIT_AHEAD" #%{${reset_color}%}"
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD$GIT_AHEAD"
        fi
        STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_SEPARATOR"
        if [ "$GIT_STAGED" -ne "0" ]; then
 -          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STAGED$GIT_STAGED%{${reset_color}%}"
-+          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STAGED$GIT_STAGED" #%{${reset_color}%}"
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STAGED$GIT_STAGED"
        fi
        if [ "$GIT_CONFLICTS" -ne "0" ]; then
 -          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CONFLICTS$GIT_CONFLICTS%{${reset_color}%}"
-+          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CONFLICTS$GIT_CONFLICTS" #%{${reset_color}%}"
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CONFLICTS$GIT_CONFLICTS"
        fi
        if [ "$GIT_CHANGED" -ne "0" ]; then
 -          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CHANGED$GIT_CHANGED%{${reset_color}%}"
-+          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CHANGED$GIT_CHANGED" #%{${reset_color}%}"
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CHANGED$GIT_CHANGED"
        fi
        if [ "$GIT_UNTRACKED" -ne "0" ]; then
 -          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNTRACKED%{${reset_color}%}"
-+          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNTRACKED$GIT_UNTRACKED" #%{${reset_color}%}"
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNTRACKED$GIT_UNTRACKED"
        fi
-       if [ "$GIT_CHANGED" -eq "0" ] && [ "$GIT_CONFLICTS" -eq "0" ] && [ "$GIT_STAGED" -eq "0" ] && [ "$GIT_UNTRACKED" -eq "0" ]; then
-           STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CLEAN"
+-      if [ "$GIT_CHANGED" -eq "0" ] && [ "$GIT_CONFLICTS" -eq "0" ] && [ "$GIT_STAGED" -eq "0" ] && [ "$GIT_UNTRACKED" -eq "0" ]; then
+-          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CLEAN"
++      if [ "$GIT_STASHED" -ne "0" ]; then
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STASHED$GIT_STASHED"
        fi
 -      STATUS="$STATUS%{${reset_color}%}$ZSH_THEME_GIT_PROMPT_SUFFIX"
-+      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX" #"$STATUS%{${reset_color}%}$ZSH_THEME_GIT_PROMPT_SUFFIX"
++      if [ "$GIT_CHANGED" -eq "0" ] && [ "$GIT_CONFLICTS" -eq "0" ] && [ "$GIT_STAGED" -eq "0" ] && [ "$GIT_UNTRACKED" -eq "0" ] && [ "$GIT_STASHED" -eq "0" ]; then
++          STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_CLEAN" 
++      fi
++      STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
        echo "$STATUS"
      fi
  }
@@ -63,27 +76,65 @@ index 2776f29..6a97656 100644
  # Default values for the appearance of the prompt.
 -ZSH_THEME_GIT_PROMPT_PREFIX="("
 -ZSH_THEME_GIT_PROMPT_SUFFIX=")"
-+ZSH_THEME_GIT_PROMPT_PREFIX="" #"("
-+ZSH_THEME_GIT_PROMPT_SUFFIX="" #")"
++ZSH_THEME_GIT_PROMPT_PREFIX=""
++ZSH_THEME_GIT_PROMPT_SUFFIX=""
  ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
 -ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
 -ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{●%G%}"
 -ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{✖%G%}"
 -ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{✚%G%}"
-+ZSH_THEME_GIT_PROMPT_BRANCH="" #"%{$fg_bold[magenta]%}"
-+ZSH_THEME_GIT_PROMPT_STAGED="%{●%G%}" #"%{$fg[red]%}%{●%G%}"
-+ZSH_THEME_GIT_PROMPT_CONFLICTS="%{✖%G%}" #"%{$fg[red]%}%{✖%G%}"
-+ZSH_THEME_GIT_PROMPT_CHANGED="%{✚%G%}" #"%{$fg[blue]%}%{✚%G%}"
++ZSH_THEME_GIT_PROMPT_BRANCH=""
++ZSH_THEME_GIT_PROMPT_STAGED="%{●%G%}"
++ZSH_THEME_GIT_PROMPT_CONFLICTS="%{✖%G%}"
++ZSH_THEME_GIT_PROMPT_CHANGED="%{✚%G%}"
  ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
  ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
 -ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✔%G%}"
-+ZSH_THEME_GIT_PROMPT_CLEAN="%{✔%G%}" #"%{$fg_bold[green]%}%{✔%G%}"
- 
+-
 -# Set the prompt.
 -RPROMPT='$(git_super_status)'
++ZSH_THEME_GIT_PROMPT_CLEAN="%{✔%G%}"
++ZSH_THEME_GIT_PROMPT_STASHED="%{⚑%G%}"
+diff --git a/plugins/git-prompt/gitstatus.py b/plugins/git-prompt/gitstatus.py
+index a4d07cd..b65f644 100644
+--- a/plugins/git-prompt/gitstatus.py
++++ b/plugins/git-prompt/gitstatus.py
+@@ -27,6 +27,16 @@ def get_tagname_or_hash():
+         return hash_
+     return None
+ 
++def get_stash():
++    cmd = Popen(['git', 'rev-parse', '--git-dir'], stdout=PIPE, stderr=PIPE)
++    so, se = cmd.communicate()
++    stash_file = '%s%s' % (so.decode('utf-8').rstrip(), '/logs/refs/stash')
++
++    try:
++        with open(stash_file) as f:
++            return sum(1 for _ in f)
++    except IOError:
++        return 0
+ 
+ # `git status --porcelain --branch` can collect all information
+ # branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind
+@@ -72,6 +82,8 @@ for st in status:
+         elif st[0] != ' ':
+             staged.append(st)
+ 
++stashed=get_stash()
++
+ out = ' '.join([
+     branch,
+     str(ahead),
+@@ -80,5 +92,6 @@ out = ' '.join([
+     str(len(conflicts)),
+     str(len(changed)),
+     str(len(untracked)),
++    str(stashed)
+ ])
+ print(out, end='')
 diff --git a/themes/agnoster.zsh-theme b/themes/agnoster.zsh-theme
-index 3c30a9e..e7e8675 100644
+index 3c30a9e..7d3c4c5 100644
 --- a/themes/agnoster.zsh-theme
 +++ b/themes/agnoster.zsh-theme
 @@ -95,47 +95,16 @@ prompt_context() {
@@ -112,8 +163,7 @@ index 3c30a9e..e7e8675 100644
 +      prompt_segment red $CURRENT_FG
 +    elif [[ $GIT_BEHIND != 0 || $GIT_UNTRACKED != 0 ]] ; then
        prompt_segment yellow black
--    else
-+    else 
+     else
        prompt_segment green $CURRENT_FG
      fi
 -
