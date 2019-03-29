@@ -1,4 +1,19 @@
-Custom oh-my-zsh (b7b40b0b68c791d57d91c7f4e17ed681d01d5c75) changes:
+# Setup in ITerm2
+
+1. `brew install zsh`
+1. `chsh -s $(which zsh)`
+1. `sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
+1. `echo "source ${TOOLBOX}/zsh_profile" >> ~/.zshrc`
+1. Install Meslo fonts
+1. Add Solarized-Dark
+1. Apply custom ZSH changes from below
+1. `sed -i 's/ZSH_THEME=".*"/ZSH_THEME="agnoster"/'`
+1. `sed -i 's/plugins=.*/plugins=(git-prompt)/'`
+1. Export Solarized-Dark from ITerm2, and import into Intellij
+1. Change Intellij terminal to `/usr/local/bin/zsh`
+1. Will still have to manually change the terminal background
+
+# Custom oh-my-zsh (b7b40b0b68c791d57d91c7f4e17ed681d01d5c75) changes:
 
 ```diff
 diff --git a/plugins/git-prompt/git-prompt.plugin.zsh b/plugins/git-prompt/git-prompt.plugin.zsh
