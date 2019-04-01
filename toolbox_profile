@@ -4,18 +4,29 @@ echo "Adding '$TOOLBOX' to the PATH"
 echo "$PATH" | grep -q "$TOOLBOX" || export PATH="${PATH}:${TOOLBOX}"
 
 function total_usage {
-    ls -A | xargs du -s | sort -nrk1,1 | awk '{ N=$1; $1=""; system("echo `numfmt "N"` "$0) }' | \
-    if [[ $# -eq 1 ]] ; then 
-	head -n$1
+    if test -t -0 ; then
+        ls -A
     else
         cat
-    fi
+    fi | \
+
+    tr '\n' '\0' | xargs -0 du -s 2>/dev/null | sort -nrk1,1 | \
+    
+    while read SIZE REST ; do
+        echo "`numfmt $SIZE` $REST"
+    done
+}
+
+function fullest_directories {
+    DIR=${1:-.}; shift 2>/dev/null
+    find $DIR -type d 2>/dev/null | sort -r | awk 'a!~"^"$0{a=$0;print}' | total_usage $@
 }
 
 
 alias gw='wrapcall gradle'
 alias yw='wrapcall yarn'
 alias tu='total_usage'
+alias fd='fullest_directories'
 alias jp='jsonprettyprint'
 
 source ${TOOLBOX}/toolbox_aliases
