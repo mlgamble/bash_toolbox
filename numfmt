@@ -1,9 +1,0 @@
-#!/bin/bash
-if [[ $# > 0 ]]; then
-	while [[ $# > 0 ]]; do
-		echo "$1" ; shift
-	done
-else 
-	cat
-fi | awk '{ split("B KiB MiB GiB TiB", suffix); c=1; while($1 > 1024){$1/=1024.0; c++} print sprintf("%0.1f%s", $1, suffix[c]) }'
-

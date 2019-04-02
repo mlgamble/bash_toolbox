@@ -9,12 +9,7 @@ function total_usage {
     else
         cat
     fi | \
-
-    tr '\n' '\0' | xargs -0 du -s 2>/dev/null | sort -nrk1,1 | \
-    
-    while read SIZE REST ; do
-        printf "%-15s%s\n" "$(numfmt $SIZE)" "$REST"
-    done
+    tr '\n' '\0' | xargs -0 du -sh 2>/dev/null | sort -hr 
 }
 
 function fullest_directories {
