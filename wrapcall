@@ -1,27 +1,34 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-	echo "USAGE: wrapcall <basescript> [-s|--suffix <suffix> : default 'w'] [args]"
-	return 1
+    echo "USAGE: wrapcall <basescript> [-s|--suffix <suffix> : default 'w'] [args]"
+    return 1
 fi
 
 SCRIPT=$1; shift
 SUFFIX='w'
 
 if [ "$1" = "-s" ] || [ "$1" = "--suffix" ]; then
-	shift
-	SUFFIX=$1
-	shift
+    shift
+    SUFFIX=$1
+    shift
 fi
 
 while cancall "${SCRIPT}${SUFFIX}" ; do
-	SCRIPT="${SCRIPT}${SUFFIX}"
+    SCRIPT="${SCRIPT}${SUFFIX}"
 done
 
 if cancall $SCRIPT ; then
-	CALL="$(getcall $SCRIPT)"
-	echo "Running '$CALL${@+ }$@'" >&2
-	$CALL $@
+    CALL="$(getcall $SCRIPT)"
+    echo "Running '$CALL${@+ }$@'" >&2
+
+    # Rewrite the args as null-byte terminated
+    #  so that args with spaces aren't split
+    while [[ $# -gt 0 ]]; do
+    	printf "%b" ${1}'\0'
+        shift
+    done | \
+    xargs -0 $CALL
 else
-	echo "Cannot find proper call for '$SCRIPT'" >&2
+    echo "Cannot find proper call for '$SCRIPT'" >&2
 fi
