@@ -13,7 +13,7 @@ function total_usage {
     tr '\n' '\0' | xargs -0 du -s 2>/dev/null | sort -nrk1,1 | \
     
     while read SIZE REST ; do
-        echo "`numfmt $SIZE` $REST"
+        printf "%-15s%s\n" "$(numfmt $SIZE)" "$REST"
     done
 }
 
