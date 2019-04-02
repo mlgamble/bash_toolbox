@@ -97,7 +97,7 @@ index 2776f29..5fcd668 100644
 +ZSH_THEME_GIT_PROMPT_CLEAN="%{✔%G%}"
 +ZSH_THEME_GIT_PROMPT_STASHED="%{⚑%G%}"
 diff --git a/plugins/git-prompt/gitstatus.py b/plugins/git-prompt/gitstatus.py
-index a4d07cd..b65f644 100644
+index a4d07cd..0cd7e5d 100644
 --- a/plugins/git-prompt/gitstatus.py
 +++ b/plugins/git-prompt/gitstatus.py
 @@ -27,6 +27,16 @@ def get_tagname_or_hash():
@@ -117,7 +117,15 @@ index a4d07cd..b65f644 100644
  
  # `git status --porcelain --branch` can collect all information
  # branch, remote_branch, untracked, staged, changed, conflicts, ahead, behind
-@@ -72,6 +82,8 @@ for st in status:
+@@ -65,13 +75,15 @@ for st in status:
+     elif st[0] == '?' and st[1] == '?':
+         untracked.append(st)
+     else:
+-        if st[1] == 'M':
++        if st[1] == 'M' or st[1] == 'D':
+             changed.append(st)
+         if st[0] == 'U':
+             conflicts.append(st)
          elif st[0] != ' ':
              staged.append(st)
  
