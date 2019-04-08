@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ -z "$GIT_HOME" ]; then
+    echo "GIT_HOME is empty. Set it first." >&2
+fi
+
+ID=${1#*:}
+ORG=${ID%/*}
+LANG=${2:-java}
+
+LOC=${GIT_HOME}/${LANG}/${ORG}
+mkdir -p ${LOC}
+pushd ${LOC}
+git clone ${1}
