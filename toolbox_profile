@@ -14,6 +14,8 @@ function total_usage {
 
 function fullest_directories {
     DIR=${1:-.}; shift 2>/dev/null
+    # Sorts so that directories that sub-directories appear immediately before their parents
+    # awk will only print a line if that line isn't a starting substring of the previous one
     find $DIR -type d 2>/dev/null | sort -r | awk 'a!~"^"$0{a=$0;print}' | total_usage $@
 }
 
