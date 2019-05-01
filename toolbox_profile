@@ -25,5 +25,6 @@ alias yw='wrapcall yarn'
 alias tu='total_usage'
 alias fd='fullest_directories'
 alias jp='jsonprettyprint'
+alias bkp='backup'
 
 source ${TOOLBOX}/toolbox_aliases

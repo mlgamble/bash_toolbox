@@ -1,0 +1,10 @@
+#!/bin/bash
+
+THING=$1; shift
+if [[ -z $THING ]]; then
+  echo "Usage: $0 <file | directory>" >&2
+  exit 1
+fi
+
+NAME="$THING.bkp_`date +%Y-%m-%d_%s`"
+cp -rv $THING $NAME | head -n1
