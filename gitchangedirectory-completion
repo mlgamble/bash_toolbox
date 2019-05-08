@@ -1,0 +1,3 @@
+#!/bin/bash
+
+checkgithome && complete -d $GIT_HOME gitchangedirectory

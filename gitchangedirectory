@@ -1,0 +1,5 @@
+#!/bin/bash
+
+checkgithome && if [[ $# -gt 0 ]]; then
+    cd ${GIT_HOME}/${1}
+fi

@@ -19,21 +19,15 @@ function fullest_directories {
     find $DIR -type d 2>/dev/null | sort -r | awk 'a!~"^"$0{a=$0;print}' | total_usage $@
 }
 
-function git_change_directory {
-    checkgithome && if [[ $# -gt 0 ]]; then
-        pushd $(find $GIT_HOME -maxdepth ${2:-4} -type d -name "${1}*" 2>/dev/null | head -n1)
-    fi
-}
-
 alias tu='total_usage'
 alias fd='fullest_directories'
-alias gcd='git_change_directory'
 
 # Navigation
 alias ll='ls -l'
 
 # Git
 alias gome='checkgithome && pushd $GIT_HOME 1>/dev/null'
+alias gcd='. gitchangedirectory'
 alias grc='git clean -fdx'
 
 # Docker
