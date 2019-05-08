@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$GIT_HOME" ]; then
+    echo "GIT_HOME is empty. Set it first." >&2
+    exit 1
+fi
+
+exit 0

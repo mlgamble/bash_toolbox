@@ -19,12 +19,31 @@ function fullest_directories {
     find $DIR -type d 2>/dev/null | sort -r | awk 'a!~"^"$0{a=$0;print}' | total_usage $@
 }
 
+function git_change_directory {
+    checkgithome && if [[ $# -gt 0 ]]; then
+        pushd $(find $GIT_HOME -maxdepth ${2:-4} -type d -name "${1}*" 2>/dev/null | head -n1)
+    fi
+}
 
-alias gw='wrapcall gradle'
-alias yw='wrapcall yarn'
 alias tu='total_usage'
 alias fd='fullest_directories'
+alias gcd='git_change_directory'
+
+# Navigation
+alias ll='ls -l'
+
+# Git
+alias gome='checkgithome && pushd $GIT_HOME 1>/dev/null'
+alias grc='git clean -fdx'
+
+# Docker
+alias drma='docker rm -f $(docker ps -aq)'
+
+# Builds
+alias gw='wrapcall gradle'
+alias yw='wrapcall yarn'
+
+# Utils
 alias jp='jsonprettyprint'
 alias bkp='backup'
-
-source ${TOOLBOX}/toolbox_aliases
+  
