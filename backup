@@ -7,4 +7,4 @@ if [[ -z $THING ]]; then
 fi
 
 NAME="$THING.bkp_`date +%Y-%m-%d_%s`"
-cp -rv $THING $NAME | head -n1
+mv -v $THING $NAME | head -n1
