@@ -26,9 +26,8 @@ alias fd='fullest_directories'
 alias ll='ls -l'
 
 # Git
-alias gome='checkgithome && pushd $GIT_HOME 1>/dev/null'
-alias gcd='. gitchangedirectory'
 alias grc='git clean -fdx'
+checkgithome && hash -d git="$GIT_HOME"
 
 # Docker
 alias drma='docker rm -f $(docker ps -aq)'
