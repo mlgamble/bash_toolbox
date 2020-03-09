@@ -4,9 +4,11 @@ checkgithome || exit $?
 
 ID=${1#*:}
 ORG=${ID%/*}
+PROJECT=${ID#*/}
+PROJECT=${PROJECT%.git*}
 LANG=${2:-java}
 
 LOC=${GIT_HOME}/${LANG}/${ORG}
 mkdir -p ${LOC}
 pushd ${LOC}
-git clone ${1}
+git clone ${1} && cd "${LOC}/${PROJECT}" || popd
