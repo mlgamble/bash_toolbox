@@ -42,7 +42,7 @@ alias gwi='gw cleanIdea idea'
 alias gwio='gwi && open *.ipr'
 
 # VSCode
-alias vso='code -n --folder-uri `pwd`'
+alias vso='code -n .'
 alias gwvs='gw eclipseClasspath'
 alias gwvso='gw eclipseClasspath && vso'
 
