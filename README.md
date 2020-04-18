@@ -1,11 +1,12 @@
 # Setup
 
+0. Make sure `git` is installed and `~/.ssh` is setup
 1. Fill-out:
 ```
 ABSOLUTE_GIT_HOME=/directory/to/where/you/want/git/clone/to/store/to
 ```
 
-1. Copy + paste
+2. Copy + paste
 ```
 pushd ~ >/dev/null
 HOME=`pwd`
