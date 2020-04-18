@@ -41,6 +41,11 @@ alias yw='wrapcall yarn'
 alias gwi='gw cleanIdea idea'
 alias gwio='gwi && open *.ipr'
 
+# VSCode
+alias vso='code -n --folder-uri `pwd`'
+alias gwvs='gw eclipseClasspath'
+alias gwvso='gw eclipseClasspath && vso'
+
 # Utils
 alias jp='jsonprettyprint'
 alias bkp='backup'
