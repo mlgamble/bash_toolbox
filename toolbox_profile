@@ -29,6 +29,7 @@ alias gitrc='git clean -fdx'
 checkgithome && hash -d git="$GIT_HOME"
 alias gitc='gitclone ${@}'
 alias gitcd='. gitclone ${@}'
+alias gitpu='git push -u origin HEAD'
 
 # Docker
 alias drma='docker rm -f $(docker ps -aq)'
