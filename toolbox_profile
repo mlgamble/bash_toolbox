@@ -30,6 +30,7 @@ checkgithome && hash -d git="$GIT_HOME"
 alias gitc='gitclone ${@}'
 alias gitcd='. gitclone ${@}'
 alias gitpu='git push -u origin HEAD'
+alias gitpr='git pull --rebase origin'
 
 # Docker
 alias drma='docker rm -f $(docker ps -aq)'
