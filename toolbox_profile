@@ -50,6 +50,5 @@ alias gwvs='gw eclipseClasspath'
 alias gwvso='gw eclipseClasspath && vso'
 
 # Utils
-alias jp='jsonprettyprint'
 alias bkp='backup'
   
